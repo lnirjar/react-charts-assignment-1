@@ -3,6 +3,18 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css';
 import { fetchCountrySpecificCasesData } from '../lib/fetchCountrySpecificCasesData';
 
+// Fix for marker not showing in production build
+import L from 'leaflet';
+import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
+import markerIcon from 'leaflet/dist/images/marker-icon.png';
+import markerShadow from 'leaflet/dist/images/marker-shadow.png';
+const IconDefault: any = L.Icon.Default;
+delete IconDefault.prototype._getIconUrl;
+L.Icon.Default.mergeOptions({
+    iconUrl: markerIcon,
+    iconRetinaUrl: markerIcon2x,
+    shadowUrl: markerShadow,
+})
 
 export default function CasesMap() {
     const { isLoading, isError, data = [], error } = useQuery('country specific data', fetchCountrySpecificCasesData)
