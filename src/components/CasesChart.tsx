@@ -82,7 +82,9 @@ function CasesChart() {
             },
         ],
     };
-    return <Line options={options} data={data} />;
+    return (
+        <Line options={options} data={data} />
+    );
 }
 
 export default CasesChart

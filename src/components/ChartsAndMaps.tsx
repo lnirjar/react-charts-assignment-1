@@ -1,4 +1,5 @@
 import CasesChart from "./CasesChart"
+import CasesMap from "./CasesMap"
 
 function ChartsAndMaps() {
 
@@ -8,7 +9,7 @@ function ChartsAndMaps() {
             <CasesChart />
             <hr className="my-4" />
             <h2 className="font-bold text-3xl text-slate-950 my-2">Map</h2>
-
+            <CasesMap />
         </div>
     )
 }
