@@ -30,7 +30,7 @@ export default function CasesMap() {
                 />
                 {
                     data.map(({ country, cases, deaths, recovered, active, countryInfo: { _id, lat, long } }) => (
-                        <Marker position={[lat, long]} key={_id}>
+                        <Marker position={[lat, long]} key={`${country}-${lat}-${long}-${_id}`}>
                             <Popup>
                                 <ul>
                                     <li><span className='font-semibold'>Country</span>: {country}</li>

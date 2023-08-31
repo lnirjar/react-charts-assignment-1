@@ -11,7 +11,7 @@ function ContactsView() {
             <h1 className={`text-4xl font-bold ${data.length ? '' : 'text-center'}`}>
                 Contacts
             </h1>
-            <ul className="mt-4 grid grid-cols-2 gap-4">
+            <ul className="mt-4 grid grid-cols-1 lg:grid-cols-2 gap-4">
                 {data.map((contact) => (
                     <li key={contact.id}>
                         <ContactCard
@@ -21,7 +21,7 @@ function ContactsView() {
                 ))}
             </ul>
             {data.length ? (
-                <div className='fixed bottom-16 left-20'>
+                <div className='fixed bottom-4 sm:bottom-16 -translate-x-1/2 sm:translate-x-0 left-1/2 sm:left-20'>
                     <CreateContactButton />
                 </div>
             ) : (

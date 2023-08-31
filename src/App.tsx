@@ -12,7 +12,7 @@ const queryClient = new QueryClient();
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <div className='flex bg-neutral-100 min-h-screen p-6 gap-4'>
+      <div className='flex bg-neutral-100 min-h-screen p-6 gap-4 flex-col sm:flex-row'>
         <div>
           <Navbar />
         </div>
