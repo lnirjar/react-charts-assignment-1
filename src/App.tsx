@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, Navigate } from 'react-router-dom'
 import {
   QueryClient,
   QueryClientProvider,
@@ -18,9 +18,10 @@ function App() {
         </div>
         <div className='p-4 flex-1'>
           <Routes>
-            <Route path='/' element={<Contacts />} />
+            <Route path='/' element={<Navigate to="/contacts" />} />
             <Route path='contacts' element={<Contacts />} />
             <Route path='charts-and-maps' element={<ChartsAndMaps />} />
+            <Route path='*' element={<Navigate to="/contacts" />} />
           </Routes>
         </div>
       </div>
