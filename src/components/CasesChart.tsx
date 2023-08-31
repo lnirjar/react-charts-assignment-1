@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react'
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -10,29 +9,25 @@ import {
     Legend,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
-
-type CasesData = {
-    cases: { [key: string]: number },
-    recovered: { [key: string]: number },
-    deaths: { [key: string]: number },
-}
-
+import { useQuery } from 'react-query';
+import { fetchCasesData } from '../lib/fetchCasesData';
 
 function CasesChart() {
-    const [casesData, setCasesData] = useState<CasesData>({
-        cases: {},
-        recovered: {},
-        deaths: {}
-    });
+    const { isLoading, isError, data, error } = useQuery('cases data', fetchCasesData);
 
-    useEffect(() => {
-        async function fetchData() {
-            const response = await fetch('https://disease.sh/v3/covid-19/historical/all?lastdays=all');
-            const data = await response.json()
-            setCasesData(data)
-        }
-        fetchData()
-    }, []);
+    if (isLoading) {
+        return (
+            <div className='bg-neutral-50 p-6 rounded-lg shadow-xl shadow-neutral-200 mx-auto my-8 w-fit text-center'>
+                <p className='text-4xl'>
+                    Loading...
+                </p>
+            </div>
+        )
+    }
+
+    if (isError) {
+        return <span>Error: {error instanceof Error ? error.message : 'Failed to fetch data'}</span>
+    }
 
     ChartJS.register(
         CategoryScale,
@@ -57,33 +52,33 @@ function CasesChart() {
         },
     };
 
-    const labels = Object.keys(casesData?.cases);
+    const labels = data ? Object.keys(data.cases) : [];
 
-    const data = {
+    const chartData = {
         labels,
         datasets: [
             {
                 label: 'Cases',
-                data: Object.values(casesData?.cases),
+                data: data ? Object.values(data.cases) : [],
                 borderColor: 'rgb(251 191 36)',
                 backgroundColor: 'rgb(251 191 36 / 0.5)',
             },
             {
                 label: 'Recovered',
-                data: Object.values(casesData?.recovered),
+                data: data ? Object.values(data.recovered) : [],
                 borderColor: 'rgb(22 163 74)',
                 backgroundColor: 'rgb(22 163 74 / 0.5)',
             },
             {
                 label: 'Deaths',
-                data: Object.values(casesData?.deaths),
+                data: data ? Object.values(data.deaths) : [],
                 borderColor: 'rgb(185 28 28)',
                 backgroundColor: 'rgb(185 28 28 / 0.5)',
             },
         ],
     };
     return (
-        <Line options={options} data={data} />
+        <Line options={options} data={chartData} />
     );
 }
 
